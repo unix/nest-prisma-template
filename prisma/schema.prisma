@@ -1,0 +1,22 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["selectRelationCount"]
+}
+
+enum Role {
+  MEMBER
+  ADMIN
+}
+
+model Users {
+  id Int @id @default(autoincrement())
+  role Role @default(MEMBER)
+  name String
+  email String?
+  createdAt DateTime @default(now())
+}
