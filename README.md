@@ -19,6 +19,13 @@ A Docker configuration for PostgreSQL has been prepared in the project, run `yar
 3. Run `prisma migrate dev` to migrate database to latest version.
 4. Run `yarn dev` lift server.
 
+## Refs
+
+- [Sentry](https://sentry.io/)
+- [Prometheus](https://prometheus.io/docs/introduction/overview/)
+- [Prisma](https://www.prisma.io/docs/concepts)
+- [NestJS](https://docs.nestjs.com/)
+
 ## LICENSE
 
 [MIT](./LICENSE)

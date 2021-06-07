@@ -3,7 +3,7 @@ import { Request } from 'express'
 
 export type PaginatiorType = {
   page: number
-  prePage: number
+  perPage: number
   take: number
   skip: number
 }
@@ -11,16 +11,15 @@ export type PaginatiorType = {
 export const Pagination = createParamDecorator(
   (data: unknown, ctx?: ExecutionContext): PaginatiorType => {
     const request = ctx.switchToHttp().getRequest<Request>()
-    const headerPage = Number(request.headers?.page)
-    const headerPrePage = Number(request.headers?.per_page)
-    const page = !Number.isNaN(headerPage) ? headerPage : 1
-    const prePage = !Number.isNaN(headerPrePage) ? headerPrePage : 30
-    const skip = (page - 1) * prePage
-
+    const queryPage = Number(request.query?.page)
+    const queryPerPage = Number(request.query?.per_page)
+    const page = !Number.isNaN(queryPage) ? queryPage : 1
+    const perPage = !Number.isNaN(queryPerPage) ? queryPerPage : 30
+    const skip = (page - 1) * perPage
     return {
       page,
-      prePage,
-      take: prePage,
+      perPage,
+      take: perPage,
       skip: skip <= 0 ? 0 : skip,
     }
   },
