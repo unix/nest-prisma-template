@@ -1,7 +1,5 @@
-import { EevRecord } from './development'
+import { AppConfigType } from './development'
+import { registerAs } from '@nestjs/config'
+import { APP_ENVS } from '@/configs/constants/envs'
 
-const staging: Partial<EevRecord> = {
-  ENV_LABEL: 'STAGING',
-}
-
-export default staging
+export default registerAs<AppConfigType>(APP_ENVS.STAGING, () => ({}))

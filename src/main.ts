@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser'
 import { ValidationPipe, Logger } from '@nestjs/common'
 import { SentryInit, SentryMiddlewares } from '@/configs/sentry'
 import { PrometheusInit, metricsRequestMiddleware } from '@/configs/prometheus'
+import { AppConfigService } from '@/shared/services'
 
 async function bootstrap() {
   if (!process.env.ENV) {
@@ -30,8 +31,12 @@ async function bootstrap() {
   app.use(SentryMiddlewares.tracingHandler())
   app.use(SentryMiddlewares.errorHandler())
   app.use(metricsRequestMiddleware)
-  SentryInit(app)
+  const config = app.get(AppConfigService)
+  SentryInit(app, {
+    dsn: config.get('SENTRY_DSN'),
+    env: config.currentEnv,
+  })
   await app.listen(3001, '0.0.0.0')
-  PrometheusInit()
+  PrometheusInit(config.get('PROMETHEUS_PORT'), config.get('PROMETHEUS_NAME'))
 }
 bootstrap()

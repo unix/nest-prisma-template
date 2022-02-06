@@ -1,7 +1,5 @@
-import { EevRecord } from './development'
+import { registerAs } from '@nestjs/config'
+import { AppConfigType } from './development'
+import { APP_ENVS } from './envs'
 
-const production: Partial<EevRecord> = {
-  ENV_LABEL: 'PRODUCTION',
-}
-
-export default production
+export default registerAs<AppConfigType>(APP_ENVS.PRODUCTION, () => ({}))

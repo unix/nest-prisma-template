@@ -1,7 +1,6 @@
 import { Router } from 'express'
 import { init, Integrations, Handlers, Transports } from '@sentry/node'
 import { Integrations as TracingIntegrations } from '@sentry/tracing'
-import CONSTANTS from '@/configs/constants'
 import { INestApplication } from '@nestjs/common'
 import { IncomingMessage, ServerResponse } from 'http'
 const packageJson = require('../../package.json')
@@ -53,11 +52,17 @@ class NestTransport extends Transports.HTTPSTransport {
   }
 }
 
-export const SentryInit = (app: Router | INestApplication) => {
+export const SentryInit = (
+  app: Router | INestApplication,
+  sentryConfig: {
+    dsn: string
+    env: string
+  },
+) => {
   init({
     debug: false,
-    dsn: CONSTANTS.SENTRY_DSN,
-    environment: CONSTANTS.ENV_LABEL,
+    dsn: sentryConfig.dsn,
+    environment: sentryConfig.env,
     release: packageJson.version,
     tracesSampleRate: 1,
     integrations: [
