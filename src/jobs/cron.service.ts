@@ -1,10 +1,13 @@
-import { Injectable, Logger } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 import { Cron, CronExpression } from '@nestjs/schedule'
-import { PrismaService } from '@/shared/services'
+import { PrismaService, TransientLoggerService } from '@/shared/services'
 
 @Injectable()
 export class CronService {
-  constructor(private readonly prisma: PrismaService, private readonly logger: Logger) {
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly logger: TransientLoggerService,
+  ) {
     this.logger.setContext(CronService.name)
   }
 

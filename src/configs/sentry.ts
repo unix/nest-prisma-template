@@ -1,7 +1,6 @@
 import { Router } from 'express'
 import { init, Integrations, Handlers, Transports } from '@sentry/node'
 import { Integrations as TracingIntegrations } from '@sentry/tracing'
-import { LogLevel } from '@sentry/types'
 import CONSTANTS from '@/configs/constants'
 import { INestApplication } from '@nestjs/common'
 import { IncomingMessage, ServerResponse } from 'http'
@@ -59,8 +58,7 @@ export const SentryInit = (app: Router | INestApplication) => {
     debug: false,
     dsn: CONSTANTS.SENTRY_DSN,
     environment: CONSTANTS.ENV_LABEL,
-    release: packageJson.version || '0.0.0-fallback.0',
-    logLevel: LogLevel.Error,
+    release: packageJson.version,
     tracesSampleRate: 1,
     integrations: [
       new Integrations.Http({ tracing: true }),

@@ -1,10 +1,11 @@
-import { Global, HttpModule, Module } from '@nestjs/common'
-import { PrismaService } from './services'
+import { HttpModule } from '@nestjs/axios'
+import { Global, Module } from '@nestjs/common'
+import { PrismaService, TransientLoggerService } from './services'
 
 @Global()
 @Module({
   imports: [HttpModule],
-  providers: [PrismaService],
-  exports: [PrismaService],
+  providers: [PrismaService, TransientLoggerService],
+  exports: [PrismaService, TransientLoggerService],
 })
 export class SharedModule {}
